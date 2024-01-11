@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+
+    nginx:
+        image: nginx
+        build:
+            context: nginx
+        container_name: nginx
+        restart: unless-stopped
+        ports:
+        - 80:80
+
+    api:
+        image: api
+        build:
+            context: api
+        container_name: server
+        restart: unless-stopped
+        ports:
+        - 8080:8080
+
+    mongodb:
+        image: mongo:latest
+        container_name: database
+        restart: unless-stopped
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: s8dX4pN2CVtI
+        ports:
+        - 27017:27017
+        volumes:
+        - mongodb:/data/db
+
+volumes:
+  mongodb:
+    driver: local
